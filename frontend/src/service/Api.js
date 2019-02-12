@@ -20,10 +20,10 @@ export default class Api {
     throw Error(response.statusText);
   }
 
-  getCurrentUser() {
-    return fetch(this.getRequestUrl("/api/user/me"))
-      .then(this.handleNotOk)
-      .then(it => it.json())
+  async getCurrentUser() {
+    const response = await fetch(this.getRequestUrl('/api/user/me'));
+    this.handleNotOk(response);
+    return response.json();
   }
 
   getItems(pwd) {
