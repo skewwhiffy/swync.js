@@ -11,7 +11,7 @@ describe('Onedrive service', () => {
     onedrive = require('./onedrive');
   });
 
-  it('is TODO', () => {
+  it('returns correct authentication URL', () => {
     const test = safeId();
 
     const result = onedrive.getAuthenticationUrl(test);

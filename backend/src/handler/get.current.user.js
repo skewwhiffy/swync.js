@@ -1,9 +1,10 @@
+'use strict';
+
 const onedrive = require('../service/onedrive');
 
 const handle = async (req, res) => {
-  res.send({
-    redirect: `http://localhost:38080`
-  });
-}
+  const redirect = onedrive.getAuthenticationUrl('http://localhost:38080');
+  res.send({ redirect });
+};
 
 module.exports = handle

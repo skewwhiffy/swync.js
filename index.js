@@ -1,4 +1,7 @@
-const getCurrentUserHandler = require('./backend/handler/get.current.user');
+'use strict';
+
+const getCurrentUserHandler = require('./backend/src/handler/get.current.user');
+const recordAuthCodeHandler = require('./backend/src/handler/record.auth.code');
 const express = require('express');
 const app = express();
 
@@ -10,6 +13,7 @@ app.use((req, res, next) => {
 app.use(express.static('backend/resources/www'));
 app.get('/api', (req, res) => res.send('Hello world'));
 app.get('/api/user/me', getCurrentUserHandler);
+app.post('/api/onedrive/authcode', recordAuthCodeHandler);
 app.get('*', (req, res) => res.sendfile('backend/resources/www/index.html'));
 
 // TODO:
