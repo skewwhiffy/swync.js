@@ -1,0 +1,13 @@
+{
+  "dev": {
+  },
+  "test": {
+    "driver": "sqlite3",
+    "filename": ":memory:"
+  },
+
+  "prod": {
+    "driver": "sqlite3",
+    "filename": "~/.config/swync.js/meta.db"
+  }
+}

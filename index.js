@@ -1,4 +1,8 @@
 'use strict';
 
-require('./db/src/migrate');
-require('./backend/src/index');
+const migrations = require('./db/src/migrate');
+migrations
+  .run()
+  .then(() => {
+    require('./backend/src/index');
+  });
