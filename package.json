@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "backend.test": "mocha \"./backend/src/**/*.test.js\"",
-    "test": "yarn run backend.test"
+    "database.test": "mocha \"./db/src/**/*.test.js\"",
+    "test": "yarn run backend.test && yarn run database.test"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "generate-safe-id": "^1.0.2",
+    "sqlite3": "^4.0.6",
     "url": "^0.11.0"
   },
   "devDependencies": {
