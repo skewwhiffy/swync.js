@@ -17,7 +17,7 @@ const listMigrations = folder => new Promise((resolve, reject) => {
 });
 
 const readFile = filePath => new Promise((resolve, reject) => {
-  fs.readFile(filePath, (err, doc) => {
+  fs.readFile(filePath, 'utf-8', (err, doc) => {
     if (err) {
       reject(err);
       return;
@@ -29,6 +29,7 @@ const readFile = filePath => new Promise((resolve, reject) => {
 
 class Migrator {
   constructor(db) {
+    if (!db) throw Error('No DB object passed in');
     this.db = db;
   }
 
@@ -36,9 +37,10 @@ class Migrator {
     const migrations = await listMigrations(migrationsFolder);
     const sql = await Promise.all(migrations
       .map(it => path.join(migrationsFolder, it))
-      .map(it => readFile(it)))
-    console.log(sql[0]);
-    console.log('Hello world');
+      .map(it => readFile(it)));
+    for (let i = 0; i < sql.length; i++) {
+      await this.db.execute(sql[i]);
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 'use strict';
 
+const expect = require('chai').expect;
 const Db = require('./db');
 const Migrator = require('./migrate');
 
@@ -17,9 +18,9 @@ describe('Migrator', () => {
     db.close();
   });
 
-  it('creates user table', async () => {
-    const result = await db.execute('select * from [user]');
+  it('creates users table', async () => {
+    const result = await db.execute('select * from users');
 
-    expect(result).to.be.truthy;
+    expect(result).to.be.ok;
   });
 });
