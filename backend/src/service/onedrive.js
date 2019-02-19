@@ -37,6 +37,32 @@ class Onedrive {
       expiresIn: request.expires_in
     };
   };
+
+  async getUser(accessToken, redirectUri) {
+    throw Error('TODO');
+    /*
+        fun getUser(accessToken: AccessToken, redirectUri: URI): User {
+        return Request(Method.GET, "v1.0/me/drive")
+                .header("Authorization", "bearer ${accessToken.access_token}")
+                .let { onedriveClients.graphClient(it) }
+                .let { DriveResource(it) }
+                .let { it.owner.user }
+                .let { User(
+                it.id,
+                it.displayName,
+                redirectUri.toString(),
+                accessToken.refresh_token) }
+
+
+
+  data class User(
+    val id: String,
+    val displayName: String,
+    val redirectUri: String,
+    val refreshToken: String
+)
+                */
+  };
 }
 
 module.exports = Onedrive;

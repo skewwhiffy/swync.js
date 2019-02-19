@@ -1,25 +1,25 @@
 'use strict';
 
 const UserRepository = require('../../../db/src/repository/user');
-const onedrive = require('../service/onedrive');
 
 class Handler {
-  constructor(userRepository) {
+  constructor(onedrive, userRepository) {
     if (!userRepository) throw Error('Need a user Repository');
+    if (!onedrive) throw Error('Need onedrive client');
     this.userRepository = userRepository;
+    this.onedrive = onedrive;
   }
   async handle(req, res) {
     const authCode = req.body.authCode;
-    //const accessToken = await onedrive.getAccessTokenFromAuthCode();
-    /*
-        val requestDeserialized = OnedriveCallbackRequest(request)
-        val accessToken = dependencies.oneDrive.getAccessToken(
-          requestDeserialized.authCode, dependencies.config.defaultRedirectUri())
-        val userDetails = dependencies.oneDrive.getUser(
-          accessToken, dependencies.config.defaultRedirectUri())
-        dependencies.userRepository.addUser(userDetails)
-        return Response(ACCEPTED)
-        */
+    const accessToken = await this.onedrive.getAccessTokenFromAuthCode(
+      authCode,
+      // TODO: Commonize 38080
+      'http://localhost:38080'
+    );
+    const user = await this.onedrive.getUser(accessToken, 'http://localhost:38080');
+    console.log('hello mum');
+    await this.userRepository.addUser(user);
+    console.log('goodbye mum');
     res.status(202).send();
   };
 }
