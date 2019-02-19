@@ -13,6 +13,7 @@ describe('Onedrive service', () => {
 
   beforeEach(() => {
     axios = {
+      get: sinon.stub(),
       post: sinon.stub()
     };
     const Onedrive = proxyquire('./onedrive', {
@@ -70,5 +71,35 @@ describe('Onedrive service', () => {
     expect(axiosQuery.grant_type).to.equal('authorization_code');
     expect(axiosQuery.code).to.equal(authCode);
     expect(axiosOptions.headers['Content-Type']).to.equal('application/x-www-form-urlencoded');
+  });
+
+
+  it('makes correct call to get user details', async () => {
+    const accessToken = {
+      refreshToken: safeId(),
+      accessToken: safeId(),
+      expiresIn: 70
+    };
+    const redirectUrl = safeId();
+    const expectedResponse = {
+      id: safeId(),
+      displayName: safeId(),
+      redirectUri: redirectUrl,
+      refreshToken: accessToken.refreshToken
+    };
+    const onedriveResponse = {
+      owner: {
+        user: {
+          id: expectedResponse.id,
+          displayName: expectedResponse.displayName
+        }
+      }
+    };
+    axios.get.resolves(onedriveResponse);
+
+    const result = await onedrive.getUser(accessToken, redirectUrl);
+
+    expect(axios.get.callCount).to.equal(1);
+    expect(result).to.be.eql(expectedResponse);
   });
 });

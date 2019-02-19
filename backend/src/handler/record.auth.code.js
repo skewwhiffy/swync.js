@@ -17,9 +17,7 @@ class Handler {
       'http://localhost:38080'
     );
     const user = await this.onedrive.getUser(accessToken, 'http://localhost:38080');
-    console.log('hello mum');
     await this.userRepository.addUser(user);
-    console.log('goodbye mum');
     res.status(202).send();
   };
 }

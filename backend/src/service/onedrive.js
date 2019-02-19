@@ -26,42 +26,30 @@ class Onedrive {
       grant_type: 'authorization_code',
       code: authCode
     };
-    const request = await axios.post(
+    const response = await axios.post(
       'https://login.live.com/oauth20_token.srf',
       querystring.stringify(requestParameters),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
     );
     return {
-      refreshToken: request.refresh_token,
-      accessToken: request.access_token,
-      expiresIn: request.expires_in
+      refreshToken: response.refresh_token,
+      accessToken: response.access_token,
+      expiresIn: response.expires_in
     };
   };
 
   async getUser(accessToken, redirectUri) {
-    throw Error('TODO');
-    /*
-        fun getUser(accessToken: AccessToken, redirectUri: URI): User {
-        return Request(Method.GET, "v1.0/me/drive")
-                .header("Authorization", "bearer ${accessToken.access_token}")
-                .let { onedriveClients.graphClient(it) }
-                .let { DriveResource(it) }
-                .let { it.owner.user }
-                .let { User(
-                it.id,
-                it.displayName,
-                redirectUri.toString(),
-                accessToken.refresh_token) }
-
-
-
-  data class User(
-    val id: String,
-    val displayName: String,
-    val redirectUri: String,
-    val refreshToken: String
-)
-                */
+    const response = await axios.get(
+      'https://graph.microsoft.com/v1.0/me/drive',
+      { headers: { Authorization: `bearer ${accessToken.accessToken}` } }
+    );
+    const user = response.owner.user;
+    return {
+      id: user.id,
+      displayName: user.displayName,
+      redirectUri,
+      refreshToken: accessToken.refreshToken
+    };
   };
 }
 
