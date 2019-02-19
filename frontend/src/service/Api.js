@@ -1,6 +1,7 @@
 import Config from '../config/Config';
 import Logger from '../logging/Logger';
-import urlJoin from "url-join";
+import urlJoin from 'url-join';
+import axios from 'axios';
 
 export default class Api {
   logger = new Logger();
@@ -39,14 +40,11 @@ export default class Api {
       .then(it => it.json());
   }
 
-  setAuthCode(code) {
-    return fetch(this.getRequestUrl("/api/onedrive/authcode"),
-      {
-        method: "POST",
-        body: JSON.stringify({
-          authCode: code
-        })
-      })
-      .then(this.handleNotOk)
+  async setAuthCode(code) {
+    const response = await axios.post(
+      '/api/onedrive/authcode',
+      { authCode: code }
+    );
+    return this.handleNotOk(response);
   }
 }

@@ -1,10 +1,12 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const Migrator = require('./db/src/migrate');
-const Db = require('./db/src/db');
+const instantiator = require('./backend/src/ioc/instantiator');
 
-const db = new Db('~/.config/swync.js/db');
-new Migrator(db)
+instantiator
+  .instantiate(Migrator)
   .run()
   .then(() => {
     require('./backend/src/index');

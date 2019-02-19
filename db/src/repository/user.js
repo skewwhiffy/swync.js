@@ -1,6 +1,5 @@
 'use strict';
 
-
 class UserRepository {
   constructor(db) {
     if (!db) throw Error('Need a DB object');

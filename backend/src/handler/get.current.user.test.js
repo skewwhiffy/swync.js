@@ -4,6 +4,7 @@ const expect = require('chai').expect;
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const safeId = require('generate-safe-id');
+const GetCurrentUserHandler = require('./get.current.user');
 
 describe('get current user handler', () => {
   let mockRequest;
@@ -19,16 +20,14 @@ describe('get current user handler', () => {
     onedrive = {
       getAuthenticationUrl: sinon.stub()
     };
-    handler = proxyquire('./get.current.user', {
-      '../service/onedrive': onedrive
-    });
+    handler = new GetCurrentUserHandler(onedrive);
   });
   
   it('returns redirect URL from onedrive service', async () => {
     const redirect = safeId();
     onedrive.getAuthenticationUrl.returns(redirect);
 
-    handler(mockRequest, mockResponse);
+    handler.handle(mockRequest, mockResponse);
 
     expect(mockResponse.send.callCount).to.equal(1);
     expect(mockResponse.send.firstCall.args[0]).to.eql({ redirect });

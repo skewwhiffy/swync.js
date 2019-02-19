@@ -23,4 +23,8 @@ describe('Migrator', () => {
 
     expect(result).to.be.ok;
   });
+
+  it('deals with running migrations multiple times', async () => {
+    await migrator.run();
+  });
 });
