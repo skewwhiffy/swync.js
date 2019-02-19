@@ -3,6 +3,7 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const safeId = require('generate-safe-id');
+const testData = require('../../../test/data');
 const Database = require('../db');
 const Migrator = require('../migrate');
 const UserRepository = require('./user');
@@ -46,12 +47,7 @@ VALUES (?, ?, ?, ?)
   });
 
   it('can persist a user', async () => {
-    const user = {
-      id: safeId(),
-      displayName: safeId(),
-      redirectUri: safeId(),
-      refreshToken: safeId()
-    };
+    const user = testData.getTestUser();
     await repo.addUser(user);
 
     const returned = await repo.getUser();

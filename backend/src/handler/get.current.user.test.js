@@ -4,6 +4,7 @@ const expect = require('chai').expect;
 const sinon = require('sinon');
 const proxyquire = require('proxyquire');
 const safeId = require('generate-safe-id');
+const testData = require('../../../test/data');
 const GetCurrentUserHandler = require('./get.current.user');
 
 describe('get current user handler', () => {
@@ -39,12 +40,7 @@ describe('get current user handler', () => {
   });
 
   it('returns current user data when logged in', async () => {
-    const user = {
-      id: safeId(),
-      displayName: safeId(),
-      refreshToken: safeId(),
-      redirectUri: safeId()
-    };
+    const user = testData.getTestUser();
     userRepository.getUser.resolves(user);
     const expectedResponse = {
       displayName: user.displayName
