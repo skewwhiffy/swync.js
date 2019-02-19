@@ -1,3 +1,4 @@
 const axios = require('axios');
 
-axios.post('http://localhost:38080/api/onedrive/authCode', { code: 'hello' });
+axios.get('http://localhost:38080/api/items/poo/face')
+  .then(it => console.log(it.status));

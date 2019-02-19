@@ -11,6 +11,16 @@ const setup = app => {
   app.get('/api', (req, res) => res.send('Hello world'));
   app.get('/api/user/me', getCurrentUserHandler.handle);
   app.post('/api/onedrive/authcode', recordAuthCodeHandler.handle);
+  app.get('/api/items*', (req, res) => {
+    console.log('Items');
+    res.send({});
+  });
 }
+
+// TODO:
+// me
+// items
+// music
+
 
 module.exports = setup;
