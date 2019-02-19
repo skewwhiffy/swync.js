@@ -6,6 +6,7 @@ class Handler {
     if (!onedrive) throw Error('Need onedrive');
     this.userRepository = userRepository;
     this.onedrive = onedrive;
+    this.handle = this.handle.bind(this);
   }
 
   async handle (req, res) {

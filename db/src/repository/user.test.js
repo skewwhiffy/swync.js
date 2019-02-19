@@ -39,7 +39,6 @@ VALUES (?, ?, ?, ?)
       try {
         await repo.getUser();
       } catch (e) {
-        console.log(e);
         return;
       }
       expect(true).to.be.false;

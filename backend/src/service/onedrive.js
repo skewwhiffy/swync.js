@@ -32,9 +32,9 @@ class Onedrive {
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
     );
     return {
-      refreshToken: response.refresh_token,
-      accessToken: response.access_token,
-      expiresIn: response.expires_in
+      refreshToken: response.data.refresh_token,
+      accessToken: response.data.access_token,
+      expiresIn: response.data.expires_in
     };
   };
 
@@ -43,7 +43,7 @@ class Onedrive {
       'https://graph.microsoft.com/v1.0/me/drive',
       { headers: { Authorization: `bearer ${accessToken.accessToken}` } }
     );
-    const user = response.owner.user;
+    const user = response.data.owner.user;
     return {
       id: user.id,
       displayName: user.displayName,

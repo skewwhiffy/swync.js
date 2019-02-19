@@ -50,7 +50,7 @@ describe('Onedrive service', () => {
       accessToken: onedriveResponse.access_token,
       expiresIn: 69
     };
-    axios.post.resolves(onedriveResponse);
+    axios.post.resolves({ data: onedriveResponse });
 
     const result = await onedrive.getAccessTokenFromAuthCode(authCode, redirectUrl);
 
@@ -95,7 +95,7 @@ describe('Onedrive service', () => {
         }
       }
     };
-    axios.get.resolves(onedriveResponse);
+    axios.get.resolves({ data: onedriveResponse });
 
     const result = await onedrive.getUser(accessToken, redirectUrl);
 

@@ -8,7 +8,9 @@ class Handler {
     if (!onedrive) throw Error('Need onedrive client');
     this.userRepository = userRepository;
     this.onedrive = onedrive;
+    this.handle = this.handle.bind(this);
   }
+
   async handle(req, res) {
     const authCode = req.body.authCode;
     const accessToken = await this.onedrive.getAccessTokenFromAuthCode(
