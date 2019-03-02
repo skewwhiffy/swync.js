@@ -8,3 +8,7 @@ echo Embedding static www into backend solution...
 mkdir -p ./backend/resources/www
 rm -fr ./backend/resources/www
 mv frontend/dist ./backend/resources/www
+
+echo Building backend
+./yarn.sh install
+./yarn.sh test
