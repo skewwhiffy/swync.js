@@ -1,0 +1,9 @@
+#!/bin/bash
+session=sywnc
+cd ~/code/github.com/skewwhiffy/sywnc.js
+tmux kill-session -t $session
+tmux new-session -d -s $session
+tmux send-keys 'nvim'
+tmux send-keys Enter
+tmux new-window
+tmux attach-session -t $session
